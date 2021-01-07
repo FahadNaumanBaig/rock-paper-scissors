@@ -1,0 +1,66 @@
+<html>
+<body> 
+    <div id="demo"> 
+        <button id="rock">Rock</button> 
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+    </div>
+<script>
+        let playerSelection = "None";
+        let computerSelection = "None";
+        let compPlay = ["rock", "paper", "scissors"];
+
+        const Rock = document.querySelector('#rock');
+        const Paper = document.querySelector('#paper');
+        const Scissors = document.querySelector('#scissors');
+
+        Rock.onclick = () => 
+        { 
+            playerSelection = "rock"; 
+            game();
+        };
+        Paper.onclick = () => 
+        { 
+            playerSelection = "paper"; 
+            game();
+        };
+        Scissors.onclick = () => 
+        { 
+            playerSelection = "scissors";
+            game();
+        };
+
+    function computerPlay()
+    {
+        computerSelection = compPlay[Math.floor(Math.random(compPlay)*compPlay.length)];
+    }
+    function playRound(playerSelection, computerSelection)
+    {
+        if (playerSelection == computerSelection)
+        {
+            alert( playerSelection +" and "+ computerSelection + ". It's a tie.");
+            console.log(playerSelection +" and "+ computerSelection + ". It's a tie.");
+        }
+        else if (((playerSelection=="rock")&&(computerSelection=="scissors")) || 
+            ((playerSelection=="paper")&&(computerSelection=="rock")) || 
+            ((playerSelection=="scissors")&& (computerSelection=="paper")))
+        {
+            alert(playerSelection +" beats "+ computerSelection+". You won.");
+            console.log(playerSelection +" beats "+ computerSelection+". You won.");
+        }
+        else
+        {
+            alert(computerSelection+" beats "+playerSelection+". You lost.");
+            console.log(computerSelection+" beats "+playerSelection+". You lost.");
+        }
+    }
+    function game()
+    {  
+        console.log("Player = " + playerSelection);
+        computerPlay();
+        console.log("Computer = "+ computerSelection);
+        playRound(playerSelection, computerSelection);   
+    }
+</script>
+</body>
+</html>
