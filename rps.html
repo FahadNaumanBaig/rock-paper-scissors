@@ -5,60 +5,103 @@
         <button id="paper">Paper</button>
         <button id="scissors">Scissors</button>
     </div>
+    <div>
+        <p>0:0</p>
+    </div>
+    <div>
+        <button id="again">Play Again</button>
+    </div>
 <script>
         let playerSelection = "None";
         let computerSelection = "None";
         let compPlay = ["rock", "paper", "scissors"];
+        let round = 1;
+        let playScore = 0;
+        let compScore = 0;
 
         const Rock = document.querySelector('#rock');
         const Paper = document.querySelector('#paper');
         const Scissors = document.querySelector('#scissors');
+        const playAgain = document.querySelector('#again');
+        const p = document.querySelector('p');
 
+        playAgain.onclick = () =>
+        {
+            p.textContent='0:0';
+            round = 1;
+            playScore =0;
+            compScore =0;
+        }
         Rock.onclick = () => 
         { 
             playerSelection = "rock"; 
             game();
+            round++;
         };
         Paper.onclick = () => 
         { 
             playerSelection = "paper"; 
             game();
+            round++;
         };
         Scissors.onclick = () => 
         { 
             playerSelection = "scissors";
             game();
+            round++;
         };
 
     function computerPlay()
     {
-        computerSelection = compPlay[Math.floor(Math.random(compPlay)*compPlay.length)];
+        computerSelection = 
+        compPlay[Math.floor(Math.random(compPlay)*compPlay.length)];
     }
     function playRound(playerSelection, computerSelection)
     {
-        if (playerSelection == computerSelection)
         {
-            alert( playerSelection +" and "+ computerSelection + ". It's a tie.");
-            console.log(playerSelection +" and "+ computerSelection + ". It's a tie.");
+            if (playerSelection == computerSelection)
+            {
+                p.textContent = ("Round "+ round + " :" +
+                playerSelection +" and "+ computerSelection + ". It's a tie."
+                + playScore + ":" + compScore);
+            }
+            else if (((playerSelection=="rock")&&(computerSelection=="scissors")) || 
+                ((playerSelection=="paper")&&(computerSelection=="rock")) || 
+                ((playerSelection=="scissors")&& (computerSelection=="paper")))
+            {
+                playScore++;
+                p.textContent = ("Round "+ round + " :" + 
+                playerSelection +" beats "+ computerSelection+". You won." 
+                + playScore + ":" + compScore);
+            }
+            else
+            {
+                compScore++;
+                p.textContent = ("Round "+ round + " :" + 
+                computerSelection+" beats "+playerSelection+". You lost."
+                + playScore + ":" + compScore);
+            }
         }
-        else if (((playerSelection=="rock")&&(computerSelection=="scissors")) || 
-            ((playerSelection=="paper")&&(computerSelection=="rock")) || 
-            ((playerSelection=="scissors")&& (computerSelection=="paper")))
         {
-            alert(playerSelection +" beats "+ computerSelection+". You won.");
-            console.log(playerSelection +" beats "+ computerSelection+". You won.");
-        }
-        else
-        {
-            alert(computerSelection+" beats "+playerSelection+". You lost.");
-            console.log(computerSelection+" beats "+playerSelection+". You lost.");
+            if (playScore == 5)
+            {
+                alert("YOU WON!!!");
+                round = 0;
+                playScore =0;
+                compScore =0;
+            }
+            else if (compScore == 5) 
+            {
+                alert("YOU LOST!!!");
+                round = 0;
+                playScore =0;
+                compScore =0;
+            }
         }
     }
     function game()
     {  
-        console.log("Player = " + playerSelection);
         computerPlay();
-        console.log("Computer = "+ computerSelection);
         playRound(playerSelection, computerSelection);   
     }
 </script>
